@@ -1,11 +1,10 @@
 # Git Style Guide
 
-This is a Git Style Guide inspired by [*How to Get Your Change Into the Linux
+Ini adalah Git Style Guide yang terinspirasi oleh [*How to Get Your Change Into the Linux
 Kernel*](https://kernel.org/doc/html/latest/process/submitting-patches.html),
-the [git man pages](http://git-scm.com/doc) and various practices popular
-among the community.
+dari [git man pages](http://git-scm.com/doc) dan beberapa praktik yang populer dikalangan komunitas.
 
-Translations are available in the following languages:
+Beberapa terjemahan tersedia di berbagai bahasa berikut:
 
 * [Chinese (Simplified)](https://github.com/aseaday/git-style-guide)
 * [Chinese (Traditional)](https://github.com/JuanitoFatas/git-style-guide)
@@ -13,6 +12,7 @@ Translations are available in the following languages:
 * [Georgian](https://github.com/davidkadaria/git-style-guide)
 * [German](https://github.com/runjak/git-style-guide)
 * [Greek](https://github.com/grigoria/git-style-guide)
+* [Indonesian](https://github.com/refansa/git-style-guide)
 * [Italian](https://github.com/vincendep/git-style-guide)
 * [Japanese](https://github.com/objectx/git-style-guide)
 * [Korean](https://github.com/ikaruce/git-style-guide)
@@ -24,64 +24,62 @@ Translations are available in the following languages:
 * [Turkish](https://github.com/CnytSntrk/git-style-guide)
 * [Ukrainian](https://github.com/denysdovhan/git-style-guide)
 
-If you feel like contributing, please do so! Fork the project and open a pull
-request.
+Jika kamu ingin berkontribusi, kamu dipersilahkan! Fork proyek ini dan buka sebuah pull request.
 
-# Table of contents
+# Daftar Isi
 
 1. [Branches](#branches)
 2. [Commits](#commits)
-  1. [Messages](#messages)
+  1. [Pesan](#pesan)
 3. [Merging](#merging)
-4. [Misc.](#misc)
+4. [Lain-lain.](#lain-lain)
 
 ## Branches
 
-* Choose *short* and *descriptive* names:
+* Pilih nama yang *pendek* dan *deskriptif*:
 
   ```shell
-  # good
+  # bagus
   $ git checkout -b oauth-migration
 
-  # bad - too vague
+  # tidak bagus - terlalu samar
   $ git checkout -b login_fix
   ```
 
-* Identifiers from corresponding tickets in an external service (eg. a GitHub
-  issue) are also good candidates for use in branch names. For example:
+* Pengidentifikasi dari ticket-ticket terkait di dalam sebuah layanan eksternal
+  (cth. GitHub issue) juga kandidat yang bagus untuk digunakan dalam nama branch. Sebagai contoh:
 
   ```shell
   # GitHub issue #15
   $ git checkout -b issue-15
   ```
 
-* Use lowercase in branch names. External ticket identifiers with uppercase
-  letters are a valid exception. Use *hyphens* to separate words.
+* Gunakan huruf kecil di nama branch. Pengidentifikasi tiket eksternal
+  dengan huruf besar adalah pengecualian yang valid. Gunakan *tanda hubung* untuk memisahkan kata.
 
   ```shell
-  $ git checkout -b new-feature      # good
-  $ git checkout -b T321-new-feature # good (Phabricator task id)
-  $ git checkout -b New_Feature      # bad
+  $ git checkout -b new-feature      # bagus
+  $ git checkout -b T321-new-feature # tidak bagus (Phabricator task id)
+  $ git checkout -b New_Feature      # tidak bagus
   ```
 
-* When several people are working on the *same* feature, it might be convenient
-  to have *personal* feature branches and a *team-wide* feature branch.
-  Use the following naming convention:
+* Saat beberapa orang sedang mengerjakan fitur yang *sama*, mungkin akan lebih nyaman
+  untuk mempunyai branch fitur *personal* dan sebuah branch fitur *seluruh tim*.
+  Gunakan konvensi penamaan berikut:
 
   ```shell
-  $ git checkout -b feature-a/main # team-wide branch
-  $ git checkout -b feature-a/maria  # Maria's personal branch
-  $ git checkout -b feature-a/nick   # Nick's personal branch
+  $ git checkout -b feature-a/main   # branch untuk seluruh tim
+  $ git checkout -b feature-a/maria  # Personal branch milik Maria
+  $ git checkout -b feature-a/nick   # Personal branch milik Nick
   ```
 
-  Merge at will the personal branches to the team-wide branch (see ["Merging"](#merging)).
-  Eventually, the team-wide branch will be merged to "main".
+  Gabungkan branch personal kapan saja ke branch tim (Lihat ["Merging"](#merging)).
+  Pada akhirnya, branch tim akan digabungkan ke "main".
 
-* Delete your branch from the upstream repository after it's merged, unless
-  there is a specific reason not to.
+* Hapus branch Anda dari repositori upstream setelah penggabungan, kecuali ada
+  alasan spesifik untuk tidak melakukannya.
 
-  Tip: Use the following command while being on "main", to list merged
-  branches:
+  Tip: Gunakan perintah berikut ketika sedang dalam "main", untuk menampilkan branch yang tergabung:
 
   ```shell
   $ git branch --merged | grep -v "\*"
@@ -89,42 +87,41 @@ request.
 
 ## Commits
 
-* Each commit should be a single *logical change*. Don't make several
-  *logical changes* in one commit. For example, if a patch fixes a bug and
-  optimizes the performance of a feature, split it into two separate commits.
+* Setiap commit harus merupakan satu *perubahan logika* tunggal. Jangan membuat beberapa
+  *perubahan logika* dalam satu commit. Sebagai contoh, jika terdapat patch yang memperbaiki sebuah
+  bug dan me-optimisasi performa dari sebuah fitur, pisahkan itu menjadi dua commit yang terpisah.
 
-  *Tip: Use `git add -p` to interactively stage specific portions of the
-  modified files.*
+  *Tip: Gunakan `git add -p` untuk menambahkan area-area tertentu dari file-file yang telah
+  dimodifikasi secara interaktif.*
 
-* Don't split a single *logical change* into several commits. For example,
-  the implementation of a feature and the corresponding tests should be in the
-  same commit.
+* Jangan memisahkan sebuah "perubahan logika" tunggal ke beberapa commit. Sebagai contoh,
+  Implementasi dari sebuah fitur dan tes-tes yang berkaitan seharusnya ada didalam
+  commit yang sama.
 
-* Commit *early* and *often*. Small, self-contained commits are easier to
-  understand and revert when something goes wrong.
+* Commit *lebih awal* dan *lebih sering*. Commit-commit mandiri yang kecil lebih mudah untuk
+  dimengerti dan dikembalikan ketika terjadi sesuatu yang salah.
 
-* Commits should be ordered *logically*. For example, if *commit X* depends
-  on changes done in *commit Y*, then *commit Y* should come before *commit X*.
+* Commit-commit harus diurutkan secara *logis*. Sebagai contoh, jika *commit X* memerlukan perubahan
+  diselesaikan pada *commit Y*, berarti *commit Y* harus datang sebelum *commit X*.
 
-Note: While working alone on a local branch that *has not yet been pushed*, it's
-fine to use commits as temporary snapshots of your work. However, it still
-holds true that you should apply all of the above *before* pushing it.
+Catatan: Ketika mengerjakan sendiri disebuah branch lokal yang *belum sepenuhnya dipush*, tidak apa-apa
+untuk menggunakan commit-commit sebagai cuplikan sementara dari pengerjaan-mu. Namun, aturan-aturan 
+tadi masih berlaku kalau kamu harus mengaplikasikan seluruh perubahan diatas *sebelum* menge-push-nya.
 
-### Messages
+### Pesan
 
-* Use the editor, not the terminal, when writing a commit message:
+* Gunakan editor, bukan terminal, ketika menulis sebuah pesan commit:
 
   ```shell
-  # good
+  # bagus
   $ git commit
 
-  # bad
+  # tidak bagus
   $ git commit -m "Quick fix"
   ```
 
-  Committing from the terminal encourages a mindset of having to fit everything
-  in a single line which usually results in non-informative, ambiguous commit
-  messages.
+  Meng-commit dari terminal mendorong sebuah pemikiran untuk harus memasukkan segalanya
+  dalam sebuah baris tunggal yang mana biasanya menghasilkan pesan commit yang tidak informatif dan ambigu.
 
 * The summary line (ie. the first line of the message) should be
   *descriptive* yet *succinct*. Ideally, it should be no longer than
