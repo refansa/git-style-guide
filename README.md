@@ -1,11 +1,10 @@
 # Git Style Guide
 
-This is a Git Style Guide inspired by [*How to Get Your Change Into the Linux
+Ini adalah Git Style Guide yang terinspirasi oleh [*How to Get Your Change Into the Linux
 Kernel*](https://kernel.org/doc/html/latest/process/submitting-patches.html),
-the [git man pages](http://git-scm.com/doc) and various practices popular
-among the community.
+dari [git man pages](http://git-scm.com/doc) dan beberapa praktik yang populer dikalangan komunitas.
 
-Translations are available in the following languages:
+Beberapa terjemahan tersedia di berbagai bahasa berikut:
 
 * [Chinese (Simplified)](https://github.com/aseaday/git-style-guide)
 * [Chinese (Traditional)](https://github.com/JuanitoFatas/git-style-guide)
@@ -13,6 +12,7 @@ Translations are available in the following languages:
 * [Georgian](https://github.com/davidkadaria/git-style-guide)
 * [German](https://github.com/runjak/git-style-guide)
 * [Greek](https://github.com/grigoria/git-style-guide)
+* [Indonesian](https://github.com/refansa/git-style-guide)
 * [Italian](https://github.com/vincendep/git-style-guide)
 * [Japanese](https://github.com/objectx/git-style-guide)
 * [Korean](https://github.com/ikaruce/git-style-guide)
@@ -24,64 +24,62 @@ Translations are available in the following languages:
 * [Turkish](https://github.com/CnytSntrk/git-style-guide)
 * [Ukrainian](https://github.com/denysdovhan/git-style-guide)
 
-If you feel like contributing, please do so! Fork the project and open a pull
-request.
+Jika kamu ingin berkontribusi, kamu dipersilahkan! Fork proyek ini dan buka sebuah pull request.
 
-# Table of contents
+# Daftar Isi
 
 1. [Branches](#branches)
 2. [Commits](#commits)
-  1. [Messages](#messages)
+  1. [Pesan](#pesan)
 3. [Merging](#merging)
-4. [Misc.](#misc)
+4. [Lain-lain.](#lain-lain)
 
 ## Branches
 
-* Choose *short* and *descriptive* names:
+* Pilih nama yang *pendek* dan *deskriptif*:
 
   ```shell
-  # good
+  # bagus
   $ git checkout -b oauth-migration
 
-  # bad - too vague
+  # tidak bagus - terlalu samar
   $ git checkout -b login_fix
   ```
 
-* Identifiers from corresponding tickets in an external service (eg. a GitHub
-  issue) are also good candidates for use in branch names. For example:
+* Pengidentifikasi dari ticket-ticket terkait di dalam sebuah layanan eksternal
+  (cth. GitHub issue) juga kandidat yang bagus untuk digunakan dalam nama branch. Sebagai contoh:
 
   ```shell
   # GitHub issue #15
   $ git checkout -b issue-15
   ```
 
-* Use lowercase in branch names. External ticket identifiers with uppercase
-  letters are a valid exception. Use *hyphens* to separate words.
+* Gunakan huruf kecil di nama branch. Pengidentifikasi tiket eksternal
+  dengan huruf besar adalah pengecualian yang valid. Gunakan *tanda hubung* untuk memisahkan kata.
 
   ```shell
-  $ git checkout -b new-feature      # good
-  $ git checkout -b T321-new-feature # good (Phabricator task id)
-  $ git checkout -b New_Feature      # bad
+  $ git checkout -b new-feature      # bagus
+  $ git checkout -b T321-new-feature # tidak bagus (Phabricator task id)
+  $ git checkout -b New_Feature      # tidak bagus
   ```
 
-* When several people are working on the *same* feature, it might be convenient
-  to have *personal* feature branches and a *team-wide* feature branch.
-  Use the following naming convention:
+* Saat beberapa orang sedang mengerjakan fitur yang *sama*, mungkin akan lebih nyaman
+  untuk mempunyai branch fitur *personal* dan sebuah branch fitur *seluruh tim*.
+  Gunakan konvensi penamaan berikut:
 
   ```shell
-  $ git checkout -b feature-a/main # team-wide branch
-  $ git checkout -b feature-a/maria  # Maria's personal branch
-  $ git checkout -b feature-a/nick   # Nick's personal branch
+  $ git checkout -b feature-a/main   # branch untuk seluruh tim
+  $ git checkout -b feature-a/maria  # Personal branch milik Maria
+  $ git checkout -b feature-a/nick   # Personal branch milik Nick
   ```
 
-  Merge at will the personal branches to the team-wide branch (see ["Merging"](#merging)).
-  Eventually, the team-wide branch will be merged to "main".
+  Gabungkan branch personal kapan saja ke branch tim (Lihat ["Merging"](#merging)).
+  Pada akhirnya, branch tim akan digabungkan ke "main".
 
-* Delete your branch from the upstream repository after it's merged, unless
-  there is a specific reason not to.
+* Hapus branch Anda dari repositori upstream setelah penggabungan, kecuali ada
+  alasan spesifik untuk tidak melakukannya.
 
-  Tip: Use the following command while being on "main", to list merged
-  branches:
+  Tip: Gunakan perintah berikut ketika sedang dalam "main", untuk menampilkan branch yang tergabung:
 
   ```shell
   $ git branch --merged | grep -v "\*"
@@ -89,87 +87,85 @@ request.
 
 ## Commits
 
-* Each commit should be a single *logical change*. Don't make several
-  *logical changes* in one commit. For example, if a patch fixes a bug and
-  optimizes the performance of a feature, split it into two separate commits.
+* Setiap commit harus merupakan satu *perubahan logika* tunggal. Jangan membuat beberapa
+  *perubahan logika* dalam satu commit. Sebagai contoh, jika terdapat patch yang memperbaiki sebuah
+  bug dan me-optimisasi performa dari sebuah fitur, pisahkan itu menjadi dua commit yang terpisah.
 
-  *Tip: Use `git add -p` to interactively stage specific portions of the
-  modified files.*
+  *Tip: Gunakan `git add -p` untuk menambahkan area-area tertentu dari file-file yang telah
+  dimodifikasi secara interaktif.*
 
-* Don't split a single *logical change* into several commits. For example,
-  the implementation of a feature and the corresponding tests should be in the
-  same commit.
+* Jangan memisahkan sebuah "perubahan logika" tunggal ke beberapa commit. Sebagai contoh,
+  Implementasi dari sebuah fitur dan tes-tes yang berkaitan seharusnya ada didalam
+  commit yang sama.
 
-* Commit *early* and *often*. Small, self-contained commits are easier to
-  understand and revert when something goes wrong.
+* Commit *lebih awal* dan *lebih sering*. Commit-commit mandiri yang kecil lebih mudah untuk
+  dimengerti dan dikembalikan ketika terjadi sesuatu yang salah.
 
-* Commits should be ordered *logically*. For example, if *commit X* depends
-  on changes done in *commit Y*, then *commit Y* should come before *commit X*.
+* Commit-commit harus diurutkan secara *logis*. Sebagai contoh, jika *commit X* memerlukan perubahan
+  diselesaikan pada *commit Y*, berarti *commit Y* harus datang sebelum *commit X*.
 
-Note: While working alone on a local branch that *has not yet been pushed*, it's
-fine to use commits as temporary snapshots of your work. However, it still
-holds true that you should apply all of the above *before* pushing it.
+Catatan: Ketika mengerjakan sendiri disebuah branch lokal yang *belum sepenuhnya dipush*, tidak apa-apa
+untuk menggunakan commit-commit sebagai cuplikan sementara dari pengerjaan-mu. Namun, aturan-aturan 
+tadi masih berlaku kalau kamu harus mengaplikasikan seluruh perubahan diatas *sebelum* menge-push-nya.
 
-### Messages
+### Pesan
 
-* Use the editor, not the terminal, when writing a commit message:
+* Gunakan editor, bukan terminal, ketika menulis sebuah pesan commit:
 
   ```shell
-  # good
+  # bagus
   $ git commit
 
-  # bad
+  # tidak bagus
   $ git commit -m "Quick fix"
   ```
 
-  Committing from the terminal encourages a mindset of having to fit everything
-  in a single line which usually results in non-informative, ambiguous commit
-  messages.
+  Meng-commit dari terminal mendorong sebuah pemikiran untuk harus memasukkan segalanya
+  dalam sebuah baris tunggal yang mana biasanya menghasilkan pesan commit yang tidak informatif dan ambigu.
 
-* The summary line (ie. the first line of the message) should be
-  *descriptive* yet *succinct*. Ideally, it should be no longer than
-  *50 characters*. It should be capitalized and written in imperative present
-  tense. It should not end with a period since it is effectively the commit
-  *title*:
+* Baris kesimpulan (yaitu berarti baris pertama dari sebuah pesan) harus
+  *deksriptif* dan *ringkas*. Idealnya, harus tidak lebih dari
+  50 karakter. Harus di-kapitalisasi dan ditulis dalam bentuk kata kerja perintah
+  masa kini. Harus tidak berakhiran dengan sebuah titik karena itu secara efektif adalah
+  *judul* dari commit-nya:
 
   ```shell
-  # good - imperative present tense, capitalized, fewer than 50 characters
+  # bagus - kata kerja perintah masa kini, di-kapitalisasi, lebih sedikit dari 50 karakter
   Mark huge records as obsolete when clearing hinting faults
 
-  # bad
+  # tidak bagus
   fixed ActiveModel::Errors deprecation messages failing when AR was used outside of Rails.
   ```
 
-* After that should come a blank line followed by a more thorough
-  description. It should be wrapped to *72 characters* and explain *why*
-  the change is needed, *how* it addresses the issue and what *side-effects*
-  it might have.
+* Setelah itu harus disertai dengan baris kosong di-ikuti dengan
+  deskripsi yang lebih menyeluruh. Harus dibungkus menjadi *72 karakter* dan
+  menjelaskan *mengapa* perubahan itu dibutuhkan, *bagaimana* itu mengatasi masalah yang ada
+  dan apa *efek samping* yang mungkin itu punya.
 
-  It should also provide any pointers to related resources (eg. link to the
-  corresponding issue in a bug tracker):
+  Itu juga harus memberikan beberapa penunjuk apa saja yang berkaitan dengan sumber daya tersebut
+  (cth. link ke issue yang bersangkutan di sebuah bug tracker):
 
   ```text
-  Short (50 chars or fewer) summary of changes
+  Kesimpulan perubahan pendek (50 karakter atau kurang)
 
-  More detailed explanatory text, if necessary. Wrap it to
-  72 characters. In some contexts, the first
-  line is treated as the subject of an email and the rest of
-  the text as the body.  The blank line separating the
-  summary from the body is critical (unless you omit the body
-  entirely); tools like rebase can get confused if you run
-  the two together.
+  Teks penjelasan lebih detail, jika diperlukan. Bungkus menjadi
+  72 karakter. Dalam beberapa konteks, baris pertama diperlakukan
+  sebagai subjek dari sebuah email dan sisanya sebagai teks badan.
+  Baris yang kosong memisahkan kesimpulan dengan badan itu sangat
+  penting (kecuali kamu menghilangkan badannya secara menyeluruh);
+  alat seperti rebase bisa membingungkan jika kamu menjalankan
+  keduanya secara bersamaan.
 
-  Further paragraphs come after blank lines.
+  Paragraf selanjutnya didatangi setelah baris kosong.
 
-  - Bullet points are okay, too
+  - Beberapa poin-poin juga oke
 
-  - Use a hyphen or an asterisk for the bullet,
-    followed by a single space, with blank lines in
-    between
+  - Gunakan tanda hubung atau tanda bintang untuk poinnya,
+    disertai dengan spasi tunggal, dengan baris kosong diantaranya
 
-  The pointers to your related resources can serve as a footer
-  for your commit message. Here is an example that is referencing
-  issues in a bug tracker:
+  Penunjuk ke sumber daya yang bersangkutan dapat berfungsi sebagai
+  footer untuk pesan commit-mu. Ini adalah contoh yang mereferensikan issue
+  dalam sebuah bug tracker:
 
   Resolves: #56, #78
   See also: #12, #34
@@ -177,97 +173,97 @@ holds true that you should apply all of the above *before* pushing it.
   Source: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
   ```
 
-  Ultimately, when writing a commit message, think about what you would need
-  to know if you run across the commit in a year from now.
+  Akhirnya, ketika menulis sebuah pesan commit, pikir tentang apa yang perlu kamu
+  ketahui jika kamu kembali melihat commit itu dalam se-tahun dari sekarang.
 
-* If a *commit A* depends on *commit B*, the dependency should be
-  stated in the message of *commit A*. Use the SHA1 when referring to
-  commits.
+* Jika sebuah *commit A* bergantung pada *commit B*, ketergantungan tersebut harus
+  dinyatakan dalam pesan dari *commit A*. Gunakan SHA1 ketika mereferensikan ke commit.
 
-  Similarly, if *commit A* solves a bug introduced by *commit B*, it should
-  also be stated in the message of *commit A*.
+  Demikian pula, jika *commit A* memperbaiki sebuah bug yang di bawa oleh *commit B*,
+  itu juga harus dinyatakan dalam pesan dari *commit A*.
 
-* If a commit is going to be squashed to another commit use the `--squash` and
-  `--fixup` flags respectively, in order to make the intention clear:
+* Jika sebuah commit akan di-squashed ke commit lain, masing-masing gunakan flags `--squash` dan
+  `--fixup`, untuk membuat niat yang jelas:
 
   ```shell
   $ git commit --squash f387cab2
   ```
 
-  *(Tip: Use the `--autosquash` flag when rebasing. The marked commits will be
-  squashed automatically.)*
+  *(Tip: Gunakan flag `--autosquash` saat rebasing. Commit yang sudah ditandai akan
+  ter-squashed secara otomatis.)*
 
 ## Merging
 
-* **Do not rewrite published history.** The repository's history is valuable in
-  its own right and it is very important to be able to tell *what actually
-  happened*. Altering published history is a common source of problems for
-  anyone working on the project.
+* **Jangan menulis ulang sejarah commit yang telah dipublikasikan** Sejarah history
+  itu berharga dengan sendirinya dan sangatlah penting untuk dapat mengetahui *apa yang
+  sebenarnya terjadi*. Mengubah sejarah yang telah dipublikasi adalah sumber utama masalah
+  untuk siapa pun yang sedang mengerjakan proyek.
 
-* However, there are cases where rewriting history is legitimate. These are
-  when:
+* Namun, ada beberapa kasus dimana menulis ulang sejarah adalah sah-sah saja. Ini adalah
+  saat:
 
-  * You are the only one working on the branch and it is not being reviewed.
+  * Kamu adalah orang satu-satunya yang sedang bekerja dalam branch dan itu tidak sedang review.
 
-  * You want to tidy up your branch (eg. squash commits) and/or rebase it onto
-    the "main" in order to merge it later.
+  * Kamu ingin membersihkan branch-mu (cth. commit yang di-squash) dan/atau rebase branch tersebut
+    ke "main" untuk di-merge nanti.
+    
+  Meskipun demikian, *jangan pernah menulis ulang sejarah dari branch "main"* atau
+  branch spesial lain (yaitu digunakan oleh server produksi atau CI).
 
-  That said, *never rewrite the history of the "main" branch* or any other
-  special branches (ie. used by production or CI servers).
+* Jaga agar sejarahnya tetap *bersih* dan *simpel*. *Tepat sebelum kamu merge* branch-mu:
 
-* Keep the history *clean* and *simple*. *Just before you merge* your branch:
+    1. Pastikan itu sesuai dengan gaya panduan dan melakukan aksi apapun yang dibutuhkan
+       agar itu tidak (squash/menyusun ulang commit, mengubah kata pesan, dll.)
 
-    1. Make sure it conforms to the style guide and perform any needed actions
-       if it doesn't (squash/reorder commits, reword messages etc.)
-
-    2. Rebase it onto the branch it's going to be merged to:
+    2. Rebase ke branch yang akan digabungkan:
 
        ```shell
        [my-branch] $ git fetch
        [my-branch] $ git rebase origin/main
-       # then merge
+       # lalu gabung
        ```
+ 
+       Ini menghasilkan sebuah branch yang dapat diterapkan langsung ke akhir dari
+       branch "main" dan menghasilkan sejarah yang sangat simpel.
 
-       This results in a branch that can be applied directly to the end of the
-       "main" branch and results in a very simple history.
+       *(Note: Strategy ini lebih baik untuk proyek dengan masa hidup branch yang pendek.
+       Jika tidak, lebih baik menggabungkan branch "main" lebih sering daripada
+       me-rebase kedalamnya.)*
 
-       *(Note: This strategy is better suited for projects with short-running
-       branches. Otherwise it might be better to occassionally merge the
-       "main" branch instead of rebasing onto it.)*
-
-* If your branch includes more than one commit, do not merge with a
-  fast-forward:
+* Jika branch-mu memasukkan lebih dari satu commit, jangan menggabungkannya
+  dengan fast-forward:
 
   ```shell
-  # good - ensures that a merge commit is created
+  # bagus - pastikan commit yang digabung telah terbuat
   $ git merge --no-ff my-branch
 
-  # bad
+  # tidak bagus
   $ git merge my-branch
   ```
 
-## Misc.
+## Lain-lain.
 
-* There are various workflows and each one has its strengths and weaknesses.
-  Whether a workflow fits your case, depends on the team, the project and your
-  development procedures.
+* Ada banyak alur kerja dan masing-masing memiliki kelebihan dan kekurangannya tersendiri.
+  Apakah suatu alur kerja sesuai dengan kasus-mu, tergantung dengan tim, proyek, dan prosedur
+  pengembanganmu sendiri.
 
-  That said, it is important to actually *choose* a workflow and stick with it.
+  Meskipun demikian, sebenarnya sangatlah penting untuk *memilih* suatu alur kerja dan
+  berpegang teguh padanya.
 
-* *Be consistent.* This is related to the workflow but also expands to things
-  like commit messages, branch names and tags. Having a consistent style
-  throughout the repository makes it easy to understand what is going on by
-  looking at the log, a commit message etc.
+* *Bersikaplah konsisten.* Ini menyangkut pada alur kerja tapi juga meluas ke hal-hal
+  lain seperti pesan commit, nama branch dan tag. Memiliki gaya yang konsisten sepanjang
+  repositori membuatnya lebih mudah untuk memahami apa yang terjadi dari melihat log,
+  pesan commit, dll.
+  
+* *Tes sebelum kamu push.* Jangan menge-push pekerjaan yang setengah-setengah.
 
-* *Test before you push.* Do not push half-done work.
-
-* Use [annotated tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_annotated_tags)
-  for marking releases or other important points in the history. Prefer
+* Gunakan [annotated tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_annotated_tags)
+  untuk menandai rilis atau poin penting lainnya di sejarah commit. Pilihlah
   [lightweight tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_lightweight_tags)
-  for personal use, such as to bookmark commits for future reference.
+  untuk penggunaan personal, seperti untuk bookmark commit untuk referensi di masa depan.
 
-* Keep your repositories at a good shape by performing maintenance tasks
-  occasionally:
+* Jagalah repositori-mu dalam kondisi yang bagus dengan melakukan tugas-tugas pemeliharaan
+  secara berkala:
 
   * [`git-gc(1)`](http://git-scm.com/docs/git-gc)
   * [`git-prune(1)`](http://git-scm.com/docs/git-prune)
@@ -284,3 +280,6 @@ International license](https://creativecommons.org/licenses/by/4.0/).
 
 Agis Anastasopoulos / [@agisanast](https://twitter.com/agisanast) / http://agis.io
 ... and [contributors](https://github.com/agis-/git-style-guide/graphs/contributors)!
+
+# Translator
+Muhammad Refansa Ali Muzky / [@refansa](https://github.com/refansa)
