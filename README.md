@@ -123,7 +123,7 @@ tadi masih berlaku kalau kamu harus mengaplikasikan seluruh perubahan diatas *se
   Meng-commit dari terminal mendorong sebuah pemikiran untuk harus memasukkan segalanya
   dalam sebuah baris tunggal yang mana biasanya menghasilkan pesan commit yang tidak informatif dan ambigu.
 
-* Baris kesimpulan (yang mana berarti baris pertama dari sebuah pesan) harus
+* Baris kesimpulan (yaitu berarti baris pertama dari sebuah pesan) harus
   *deksriptif* dan *ringkas*. Idealnya, harus tidak lebih dari
   50 karakter. Harus di-kapitalisasi dan ditulis dalam bentuk kata kerja perintah
   masa kini. Harus tidak berakhiran dengan sebuah titik karena itu secara efektif adalah
@@ -173,97 +173,97 @@ tadi masih berlaku kalau kamu harus mengaplikasikan seluruh perubahan diatas *se
   Source: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
   ```
 
-  Ultimately, when writing a commit message, think about what you would need
-  to know if you run across the commit in a year from now.
+  Akhirnya, ketika menulis sebuah pesan commit, pikir tentang apa yang perlu kamu
+  ketahui jika kamu kembali melihat commit itu dalam se-tahun dari sekarang.
 
-* If a *commit A* depends on *commit B*, the dependency should be
-  stated in the message of *commit A*. Use the SHA1 when referring to
-  commits.
+* Jika sebuah *commit A* bergantung pada *commit B*, ketergantungan tersebut harus
+  dinyatakan dalam pesan dari *commit A*. Gunakan SHA1 ketika mereferensikan ke commit.
 
-  Similarly, if *commit A* solves a bug introduced by *commit B*, it should
-  also be stated in the message of *commit A*.
+  Demikian pula, jika *commit A* memperbaiki sebuah bug yang di bawa oleh *commit B*,
+  itu juga harus dinyatakan dalam pesan dari *commit A*.
 
-* If a commit is going to be squashed to another commit use the `--squash` and
-  `--fixup` flags respectively, in order to make the intention clear:
+* Jika sebuah commit akan di-squashed ke commit lain, masing-masing gunakan flags `--squash` dan
+  `--fixup`, untuk membuat niat yang jelas:
 
   ```shell
   $ git commit --squash f387cab2
   ```
 
-  *(Tip: Use the `--autosquash` flag when rebasing. The marked commits will be
-  squashed automatically.)*
+  *(Tip: Gunakan flag `--autosquash` saat rebasing. Commit yang sudah ditandai akan
+  ter-squashed secara otomatis.)*
 
 ## Merging
 
-* **Do not rewrite published history.** The repository's history is valuable in
-  its own right and it is very important to be able to tell *what actually
-  happened*. Altering published history is a common source of problems for
-  anyone working on the project.
+* **Jangan menulis ulang sejarah commit yang telah dipublikasikan** Sejarah history
+  itu berharga dengan sendirinya dan sangatlah penting untuk dapat mengetahui *apa yang
+  sebenarnya terjadi*. Mengubah sejarah yang telah dipublikasi adalah sumber utama masalah
+  untuk siapa pun yang sedang mengerjakan proyek.
 
-* However, there are cases where rewriting history is legitimate. These are
-  when:
+* Namun, ada beberapa kasus dimana menulis ulang sejarah adalah sah-sah saja. Ini adalah
+  saat:
 
-  * You are the only one working on the branch and it is not being reviewed.
+  * Kamu adalah orang satu-satunya yang sedang bekerja dalam branch dan itu tidak sedang review.
 
-  * You want to tidy up your branch (eg. squash commits) and/or rebase it onto
-    the "main" in order to merge it later.
+  * Kamu ingin membersihkan branch-mu (cth. commit yang di-squash) dan/atau rebase branch tersebut
+    ke "main" untuk di-merge nanti.
+    
+  Meskipun demikian, *jangan pernah menulis ulang sejarah dari branch "main"* atau
+  branch spesial lain (yaitu digunakan oleh server produksi atau CI).
 
-  That said, *never rewrite the history of the "main" branch* or any other
-  special branches (ie. used by production or CI servers).
+* Jaga agar sejarahnya tetap *bersih* dan *simpel*. *Tepat sebelum kamu merge* branch-mu:
 
-* Keep the history *clean* and *simple*. *Just before you merge* your branch:
+    1. Pastikan itu sesuai dengan gaya panduan dan melakukan aksi apapun yang dibutuhkan
+       agar itu tidak (squash/menyusun ulang commit, mengubah kata pesan, dll.)
 
-    1. Make sure it conforms to the style guide and perform any needed actions
-       if it doesn't (squash/reorder commits, reword messages etc.)
-
-    2. Rebase it onto the branch it's going to be merged to:
+    2. Rebase ke branch yang akan digabungkan:
 
        ```shell
        [my-branch] $ git fetch
        [my-branch] $ git rebase origin/main
-       # then merge
+       # lalu gabung
        ```
+ 
+       Ini menghasilkan sebuah branch yang dapat diterapkan langsung ke akhir dari
+       branch "main" dan menghasilkan sejarah yang sangat simpel.
 
-       This results in a branch that can be applied directly to the end of the
-       "main" branch and results in a very simple history.
+       *(Note: Strategy ini lebih baik untuk proyek dengan masa hidup branch yang pendek.
+       Jika tidak, lebih baik menggabungkan branch "main" lebih sering daripada
+       me-rebase kedalamnya.)*
 
-       *(Note: This strategy is better suited for projects with short-running
-       branches. Otherwise it might be better to occassionally merge the
-       "main" branch instead of rebasing onto it.)*
-
-* If your branch includes more than one commit, do not merge with a
-  fast-forward:
+* Jika branch-mu memasukkan lebih dari satu commit, jangan menggabungkannya
+  dengan fast-forward:
 
   ```shell
-  # good - ensures that a merge commit is created
+  # bagus - pastikan commit yang digabung telah terbuat
   $ git merge --no-ff my-branch
 
-  # bad
+  # tidak bagus
   $ git merge my-branch
   ```
 
-## Misc.
+## Lain-lain.
 
-* There are various workflows and each one has its strengths and weaknesses.
-  Whether a workflow fits your case, depends on the team, the project and your
-  development procedures.
+* Ada banyak alur kerja dan masing-masing memiliki kelebihan dan kekurangannya tersendiri.
+  Apakah suatu alur kerja sesuai dengan kasus-mu, tergantung dengan tim, proyek, dan prosedur
+  pengembanganmu sendiri.
 
-  That said, it is important to actually *choose* a workflow and stick with it.
+  Meskipun demikian, sebenarnya sangatlah penting untuk *memilih* suatu alur kerja dan
+  berpegang teguh padanya.
 
-* *Be consistent.* This is related to the workflow but also expands to things
-  like commit messages, branch names and tags. Having a consistent style
-  throughout the repository makes it easy to understand what is going on by
-  looking at the log, a commit message etc.
+* *Bersikaplah konsisten.* Ini menyangkut pada alur kerja tapi juga meluas ke hal-hal
+  lain seperti pesan commit, nama branch dan tag. Memiliki gaya yang konsisten sepanjang
+  repositori membuatnya lebih mudah untuk memahami apa yang terjadi dari melihat log,
+  pesan commit, dll.
+  
+* *Tes sebelum kamu push.* Jangan menge-push pekerjaan yang setengah-setengah.
 
-* *Test before you push.* Do not push half-done work.
-
-* Use [annotated tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_annotated_tags)
-  for marking releases or other important points in the history. Prefer
+* Gunakan [annotated tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_annotated_tags)
+  untuk menandai rilis atau poin penting lainnya di sejarah commit. Pilihlah
   [lightweight tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_lightweight_tags)
-  for personal use, such as to bookmark commits for future reference.
+  untuk penggunaan personal, seperti untuk bookmark commit untuk referensi di masa depan.
 
-* Keep your repositories at a good shape by performing maintenance tasks
-  occasionally:
+* Jagalah repositori-mu dalam kondisi yang bagus dengan melakukan tugas-tugas pemeliharaan
+  secara berkala:
 
   * [`git-gc(1)`](http://git-scm.com/docs/git-gc)
   * [`git-prune(1)`](http://git-scm.com/docs/git-prune)
@@ -280,3 +280,6 @@ International license](https://creativecommons.org/licenses/by/4.0/).
 
 Agis Anastasopoulos / [@agisanast](https://twitter.com/agisanast) / http://agis.io
 ... and [contributors](https://github.com/agis-/git-style-guide/graphs/contributors)!
+
+# Translator
+Muhammad Refansa Ali Muzky / [@refansa](https://github.com/refansa)
