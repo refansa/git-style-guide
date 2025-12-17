@@ -123,50 +123,49 @@ tadi masih berlaku kalau kamu harus mengaplikasikan seluruh perubahan diatas *se
   Meng-commit dari terminal mendorong sebuah pemikiran untuk harus memasukkan segalanya
   dalam sebuah baris tunggal yang mana biasanya menghasilkan pesan commit yang tidak informatif dan ambigu.
 
-* The summary line (ie. the first line of the message) should be
-  *descriptive* yet *succinct*. Ideally, it should be no longer than
-  *50 characters*. It should be capitalized and written in imperative present
-  tense. It should not end with a period since it is effectively the commit
-  *title*:
+* Baris kesimpulan (yang mana berarti baris pertama dari sebuah pesan) harus
+  *deksriptif* dan *ringkas*. Idealnya, harus tidak lebih dari
+  50 karakter. Harus di-kapitalisasi dan ditulis dalam bentuk kata kerja perintah
+  masa kini. Harus tidak berakhiran dengan sebuah titik karena itu secara efektif adalah
+  *judul* dari commit-nya:
 
   ```shell
-  # good - imperative present tense, capitalized, fewer than 50 characters
+  # bagus - kata kerja perintah masa kini, di-kapitalisasi, lebih sedikit dari 50 karakter
   Mark huge records as obsolete when clearing hinting faults
 
-  # bad
+  # tidak bagus
   fixed ActiveModel::Errors deprecation messages failing when AR was used outside of Rails.
   ```
 
-* After that should come a blank line followed by a more thorough
-  description. It should be wrapped to *72 characters* and explain *why*
-  the change is needed, *how* it addresses the issue and what *side-effects*
-  it might have.
+* Setelah itu harus disertai dengan baris kosong di-ikuti dengan
+  deskripsi yang lebih menyeluruh. Harus dibungkus menjadi *72 karakter* dan
+  menjelaskan *mengapa* perubahan itu dibutuhkan, *bagaimana* itu mengatasi masalah yang ada
+  dan apa *efek samping* yang mungkin itu punya.
 
-  It should also provide any pointers to related resources (eg. link to the
-  corresponding issue in a bug tracker):
+  Itu juga harus memberikan beberapa penunjuk apa saja yang berkaitan dengan sumber daya tersebut
+  (cth. link ke issue yang bersangkutan di sebuah bug tracker):
 
   ```text
-  Short (50 chars or fewer) summary of changes
+  Kesimpulan perubahan pendek (50 karakter atau kurang)
 
-  More detailed explanatory text, if necessary. Wrap it to
-  72 characters. In some contexts, the first
-  line is treated as the subject of an email and the rest of
-  the text as the body.  The blank line separating the
-  summary from the body is critical (unless you omit the body
-  entirely); tools like rebase can get confused if you run
-  the two together.
+  Teks penjelasan lebih detail, jika diperlukan. Bungkus menjadi
+  72 karakter. Dalam beberapa konteks, baris pertama diperlakukan
+  sebagai subjek dari sebuah email dan sisanya sebagai teks badan.
+  Baris yang kosong memisahkan kesimpulan dengan badan itu sangat
+  penting (kecuali kamu menghilangkan badannya secara menyeluruh);
+  alat seperti rebase bisa membingungkan jika kamu menjalankan
+  keduanya secara bersamaan.
 
-  Further paragraphs come after blank lines.
+  Paragraf selanjutnya didatangi setelah baris kosong.
 
-  - Bullet points are okay, too
+  - Beberapa poin-poin juga oke
 
-  - Use a hyphen or an asterisk for the bullet,
-    followed by a single space, with blank lines in
-    between
+  - Gunakan tanda hubung atau tanda bintang untuk poinnya,
+    disertai dengan spasi tunggal, dengan baris kosong diantaranya
 
-  The pointers to your related resources can serve as a footer
-  for your commit message. Here is an example that is referencing
-  issues in a bug tracker:
+  Penunjuk ke sumber daya yang bersangkutan dapat berfungsi sebagai
+  footer untuk pesan commit-mu. Ini adalah contoh yang mereferensikan issue
+  dalam sebuah bug tracker:
 
   Resolves: #56, #78
   See also: #12, #34
